@@ -6,6 +6,10 @@ var cors = require("cors");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+var path = require("path");
+app.use(express.static(path.join(__dirname, "/public")));
+var fs = require("fs");
+const { response } = require("express");
 // ! extract these to .env file
 // const clientId = "6bf7e36ed4914f349a1e3ae6fff609a9";
 // const clientSecret = "cd2046defae649069188bbd8e6d9a9e7";
@@ -33,7 +37,19 @@ app.post("/test", (req, res) => {
   res.send("Agora Cloud Recording Server");
 });
 
-app.get("/", (req, res) => res.send("Agora Cloud Recording Server"));
+app.get("/", (req, res) => {
+  res.writeHead(200, { "Content-Type": "text/html" });
+  fs.readFile("./index.html", null, function (error, data) {
+    if (error) {
+      res.writeHead(404);
+      res.write("File Not Found!");
+    } else {
+      res.write(data);
+    }
+    res.end();
+  });
+  // res.send("hi");
+});
 app.post("/acquire", async (req, res) => {
   const Authorization = `Basic ${Buffer.from(
     `${clientId}:${clientSecret}`
