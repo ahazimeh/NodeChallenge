@@ -155,7 +155,6 @@
           <div id="remote-playerlist"></div>
         </div>
       </div>
-      <button id="test">Test</button>
     </div>
 
     <video src="" id="something"></video>
@@ -182,7 +181,6 @@
               channel: channel,
             },
             success: function (result) {
-              alert("hi");
               $.ajax({
                 url: "http://localhost:3000/acquire",
                 method: "POST",
@@ -240,9 +238,7 @@
               token: token,
               channel: channel,
             },
-            success: function (result) {
-              alert("hi");
-            },
+            success: function (result) {},
           });
         });
       });
